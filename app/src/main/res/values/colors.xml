@@ -15,4 +15,5 @@
     <color name="colorbgbutton">#7960D4</color>
     <color name="colorgraytext">#38414A</color>
     <color name="colorpurpulewhite">#D4D0F3</color>
+    <color name="colorbgappbar">#7960D4</color>
 </resources>
