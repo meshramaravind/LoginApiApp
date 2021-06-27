@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginApiApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

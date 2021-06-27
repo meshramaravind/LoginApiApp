@@ -1,5 +1,6 @@
 package com.arvind.loginapiapp.di
 
+import com.arvind.loginapiapp.repository.LoginRepository
 import com.arvind.loginapiapp.utils.BASE_URL
 import com.arvind.loginapiapp.webapi.ApiService
 import dagger.Module
@@ -60,5 +61,13 @@ object AppModule {
     @Provides
     fun providesRetrofitService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    //login
+    @Provides
+    fun providesloginRepository(
+        apiService: ApiService
+    ): LoginRepository {
+        return LoginRepository(apiService)
     }
 }
