@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -64,6 +65,7 @@ object AppModule {
     }
 
     //login
+    @ExperimentalCoroutinesApi
     @Provides
     fun providesloginRepository(
         apiService: ApiService

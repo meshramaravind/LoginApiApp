@@ -22,12 +22,14 @@ import com.arvind.loginapiapp.viewmodel.DashboardViewModel
 import com.arvind.loginapiapp.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.regex.Pattern
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var navHostFragment: NavHostFragment
     private lateinit var appBarConfiguration: AppBarConfiguration
+    @ExperimentalCoroutinesApi
     private val dashboardViewModel: DashboardViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

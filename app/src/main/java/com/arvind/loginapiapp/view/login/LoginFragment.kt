@@ -9,6 +9,7 @@ import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.arvind.loginapiapp.R
 import com.arvind.loginapiapp.databinding.FragmentLoginBinding
@@ -19,10 +20,13 @@ import com.arvind.loginapiapp.view.base.BaseFragment
 import com.arvind.loginapiapp.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.regex.Pattern
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
+    @ExperimentalCoroutinesApi
     override val viewModel: LoginViewModel by viewModels()
     lateinit var stringEmailorMobile: String
     lateinit var stringPassword: String
@@ -63,19 +67,24 @@ class LoginFragment : BaseFragment<FragmentLoginBinding, LoginViewModel>() {
             stringPassword, "For Login user", deviceId
         )
         viewModel.loginUser(dataModelLoginBody)
-        viewModel.loginData.observe(viewLifecycleOwner, { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
+        viewModel.loginData.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { response ->
+                when (response) {
+                    is Resource.Success -> {
+                        hideProgressBar()
+                        response.data?.let { loginResponse ->
+                            findNavController().navigate(R.id.action_loginFragment_to_dashboardFragment)
+                        }
+                    }
 
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
+                    is Resource.Error -> {
+                        hideProgressBar()
+                        response.message?.let { toast(it) }
+                    }
 
+                    is Resource.Loading -> {
+                        showProgressBar()
+                    }
                 }
             }
         })

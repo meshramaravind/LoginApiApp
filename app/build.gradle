@@ -42,34 +42,34 @@ android {
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:2.31-alpha"
+    implementation "com.google.dagger:hilt-android:2.35"
     kapt "com.google.dagger:hilt-android-compiler:2.30.1-alpha"
-    annotationProcessor 'androidx.hilt:hilt-compiler:1.0.0-alpha03'
+    annotationProcessor 'androidx.hilt:hilt-compiler:1.0.0'
     //implementation "com.google.dagger:hilt-android-testing:$hilt_ver"
-    implementation "androidx.hilt:hilt-common:1.0.0-alpha03"
+    implementation "androidx.hilt:hilt-common:1.0.0"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
 
     //sdp
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1'
 
     // Retrofit + GSON
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
     implementation 'com.google.code.gson:gson:2.8.6'
 
     //Lifecycle or LiveData
@@ -83,9 +83,9 @@ dependencies {
 
 
     // activity & fragment ktx
-    implementation "androidx.fragment:fragment-ktx:1.3.5"
-    implementation "androidx.activity:activity-ktx:1.3.0-beta02"
-    implementation 'androidx.appcompat:appcompat:1.4.0-alpha02'
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
+    implementation "androidx.activity:activity-ktx:1.3.1"
+    implementation 'androidx.appcompat:appcompat:1.4.0-alpha03'
 
     // glide for image
     implementation "com.github.bumptech.glide:glide:4.12.0"

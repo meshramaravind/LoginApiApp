@@ -9,30 +9,34 @@ import com.arvind.loginapiapp.app.LoginApp
 import com.arvind.loginapiapp.model.DataModelLoginBody
 import com.arvind.loginapiapp.model.DataModelLoginStatus
 import com.arvind.loginapiapp.repository.LoginRepository
+import com.arvind.loginapiapp.utils.Event
 import com.arvind.loginapiapp.utils.Resource
 import com.arvind.loginapiapp.utils.hasInternetConnection
 import com.arvind.loginapiapp.utils.toast
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     application: Application,
     private val repository: LoginRepository
 ) :
     AndroidViewModel(application) {
-    private val _loginData = MutableLiveData<Resource<DataModelLoginStatus>>()
+    private val _loginData = MutableLiveData<Event<Resource<DataModelLoginStatus>>>()
 
-    val loginData: LiveData<Resource<DataModelLoginStatus>> = _loginData
+    val loginData: LiveData<Event<Resource<DataModelLoginStatus>>> = _loginData
 
     fun loginUser(dataModelLoginBody: DataModelLoginBody) = viewModelScope.launch {
         getLogin(dataModelLoginBody)
     }
 
     suspend fun getLogin(dataModelLoginBody: DataModelLoginBody) {
-        _loginData.postValue(Resource.Loading())
+        _loginData.postValue(Event(Resource.Loading()))
         try {
             if (hasInternetConnection<LoginApp>()) {
                 val response = repository.getLogin(dataModelLoginBody)
@@ -40,7 +44,7 @@ class LoginViewModel @Inject constructor(
                     if (response.body()!!.status == 200) {
                         val successresponse: DataModelLoginStatus? = response.body()
                         toast(getApplication(), successresponse!!.message)
-                        _loginData.postValue(Resource.Success(response.body()!!))
+                        _loginData.postValue(Event(Resource.Success(response.body()!!)))
                     } else if (response.body()!!.status == 401) {
 
                         val errorresponse: DataModelLoginStatus? = response.body()
@@ -53,19 +57,29 @@ class LoginViewModel @Inject constructor(
                     }
 
                 } else {
-                    _loginData.postValue(Resource.Error(response.message()))
+                    _loginData.postValue(Event(Resource.Error(response.message())))
                 }
             } else {
-                _loginData.postValue(Resource.Error("No Internet Connection"))
+                _loginData.postValue(Event(Resource.Error("No Internet Connection")))
                 toast(getApplication(), "No Internet Connection.!")
+            }
+        } catch (e: HttpException) {
+            when (e) {
+                is IOException -> {
+                    _loginData.postValue(Event(Resource.Error(e.message!!)))
+                    toast(getApplication(), "Exception ${e.message}")
+                }
+
             }
         } catch (t: Throwable) {
             when (t) {
                 is IOException -> {
-                    _loginData.postValue(Resource.Error(t.message!!))
+                    _loginData.postValue(Event(Resource.Error(t.message!!)))
+                    toast(getApplication(), t.message!!)
                 }
 
             }
+
         }
     }
 }

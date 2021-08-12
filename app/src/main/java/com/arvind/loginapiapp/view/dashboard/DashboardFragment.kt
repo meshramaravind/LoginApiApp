@@ -9,7 +9,9 @@ import com.arvind.loginapiapp.databinding.FragmentDashboardBinding
 import com.arvind.loginapiapp.view.base.BaseFragment
 import com.arvind.loginapiapp.viewmodel.DashboardViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class DashboardFragment : BaseFragment<FragmentDashboardBinding, DashboardViewModel>() {
     override val viewModel: DashboardViewModel by viewModels()
